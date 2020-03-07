@@ -14,3 +14,12 @@
     margin-top: 12px;
     margin-left: 12px;
 }
+
+.listStyle {
+    list-style-type: none;
+}
+
+.listItemStyle {
+    padding-left: 0;
+    margin: 0 auto;
+}
