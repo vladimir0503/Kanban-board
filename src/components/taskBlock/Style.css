@@ -1,0 +1,16 @@
+.taskBlockStyle {
+    margin: 20px 0 0 19px;
+    width: 282px;
+    background: #EBECF0;
+    border-radius: 10px; 
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleStyle {
+    margin-top: 12px;
+    margin-left: 12px;
+}
