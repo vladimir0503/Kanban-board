@@ -1,12 +1,12 @@
-import React from 'react'
-import TaskBlock from './taskBlock/TaskBlock'
+import React from 'react';
+import Backlog from './taskBlocks/Backlog';
 
-function Main () {
-    return (
-        <div>
-            <TaskBlock title='Backlog' />
-        </div>
-    )
+class Main extends React.Component {
+    render() {
+        return (
+            <Backlog title='Backlog' />
+        )
+    }
 }
 
 export default Main
