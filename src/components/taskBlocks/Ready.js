@@ -1,13 +1,11 @@
 import React from 'react'
 import Button from '../button/Button';
-import './Style.css'
+import './Style.css';
+
 
 class Ready extends React.Component {
     constructor(props) {
         super(props);
-
-        this.data = this.props.tasks
-
         this.state = {
             button: <Button onClick={this.createSelect.bind(this)} />,
             selectBox: null,
@@ -15,6 +13,10 @@ class Ready extends React.Component {
             tasks: [],
             dropDownInit: this.props.listInit
         }
+    }
+
+    test() {
+        alert('test')
     }
 
     createSelect() {
@@ -26,6 +28,7 @@ class Ready extends React.Component {
             className='taskStyle'
             onClick={this.addTask.bind(this)}>
         </div>;
+        
         this.setState({
             selectBox: selectBox
         });
@@ -38,7 +41,7 @@ class Ready extends React.Component {
     }
 
     render() {
-        const dropDown = this.state.backlogTasks.map((item, index) => {
+        const taskList = this.state.backlogTasks.map((item, index) => {
             return <div className='taskStyle' key={index}>{item}</div>;
         })
 
@@ -55,7 +58,7 @@ class Ready extends React.Component {
                 </div>
                 <div>
                     <ul className='listItemStyle'>
-                        {dropDown}
+                        <div>{taskList}</div>
                     </ul>
                 </div>
             </>

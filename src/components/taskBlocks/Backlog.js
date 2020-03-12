@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
 import './Style.css';
-import Ready from './Ready'
+import Ready from './Ready';
 
 class Backlog extends React.Component {
 
@@ -42,10 +42,10 @@ class Backlog extends React.Component {
 
         this.setState({
             input: null,
-            tasks: [...this.state.tasks, this.state.inputValue],
             inputValue: null,
+            listInit: true,
+            tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
-            listInit: true
         })
 
     }
