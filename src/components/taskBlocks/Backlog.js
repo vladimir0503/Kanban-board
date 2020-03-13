@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
 import './Style.css';
-import Ready from './Ready';
+import Ready from './ready/Ready'
 
 class Backlog extends React.Component {
 
@@ -11,14 +11,23 @@ class Backlog extends React.Component {
             button: <Button onClick={this.createInput.bind(this)} />,
             input: null,
             inputValue: null,
+            listInit: false,
             tasks: [],
-            listInit: false
+            readyTasks: []
         }
+    }
+
+    addReadyTask(event) {
+        const task = event.target;
+        this.setState({
+            readyTasks: [...this.state.readyTasks, task]
+        })
+        console.log(this.state.readyTasks)
     }
 
     createInput() {
         const input = <input
-            className='taskStyle'
+            className='taskStyle' 
             onChange={this.addValue.bind(this)}
             onClick={this.addTask.bind(this)}>
         </input>;
@@ -47,12 +56,17 @@ class Backlog extends React.Component {
             tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
         })
-
     }
 
     render() {
         const taskList = this.state.tasks.map((item, index) => {
-            return <li className='taskStyle' key={index}><span>{item}</span></li>;
+            return <li onClick={this.addReadyTask.bind(this)} 
+            className='taskStyle taskStyleBlock' key={index}><span 
+            className='taskText'>{item}</span></li>;
+        })
+
+        const readyTasks = this.state.readyTasks.map((item, index) => {
+            return <div key={index}>{item}</div>;
         })
 
         return (
@@ -74,7 +88,8 @@ class Backlog extends React.Component {
                 <div>
                     <Ready title='Ready'
                         tasks={taskList}
-                        listInit={this.state.listInit} />
+                        listInit={this.state.inputValue} 
+                        readyTasks={readyTasks} />
                 </div>
             </div>
         )

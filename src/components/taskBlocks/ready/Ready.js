@@ -1,6 +1,6 @@
-import React from 'react'
-import Button from '../button/Button';
-import './Style.css';
+import React from 'react';
+import Button from '../../button/Button'
+
 
 
 class Ready extends React.Component {
@@ -11,12 +11,13 @@ class Ready extends React.Component {
             selectBox: null,
             backlogTasks: [],
             tasks: [],
-            dropDownInit: this.props.listInit
+            dropDownInit: this.props.listInit,
+            taskClassName: ''
         }
     }
 
     test() {
-        alert('test')
+        console.log('test')
     }
 
     createSelect() {
@@ -41,8 +42,12 @@ class Ready extends React.Component {
     }
 
     render() {
-        const taskList = this.state.backlogTasks.map((item, index) => {
-            return <div className='taskStyle' key={index}>{item}</div>;
+        const dropDown = this.state.backlogTasks.map((item, index) => {
+            return <div className='dropDown' key={index}>{item}</div>;
+        })
+
+        const readyTasks = this.props.readyTasks.map((item, index) => {
+            return <div className='dropDown' key={index}>{item}</div>;
         })
 
         return (
@@ -52,13 +57,14 @@ class Ready extends React.Component {
                     <div className='inputBlock'>
                         <div className='inputBlock'>
                             {this.state.selectBox}
+                            {readyTasks}
                             {this.state.button}
                         </div>
                     </div>
                 </div>
                 <div>
                     <ul className='listItemStyle'>
-                        <div>{taskList}</div>
+                        {dropDown}
                     </ul>
                 </div>
             </>
