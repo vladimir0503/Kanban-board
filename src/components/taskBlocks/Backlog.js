@@ -18,11 +18,11 @@ class Backlog extends React.Component {
     }
 
     addReadyTask(event) {
-        const task = event.target;
+        const task = event.target.textContent;
+
         this.setState({
             readyTasks: [...this.state.readyTasks, task]
         })
-        console.log(this.state.readyTasks)
     }
 
     createInput() {
@@ -66,7 +66,8 @@ class Backlog extends React.Component {
         })
 
         const readyTasks = this.state.readyTasks.map((item, index) => {
-            return <div key={index}>{item}</div>;
+            return <div className='taskStyle taskStyleBlock' key={index}><span 
+            className='taskText'>{item}</span></div>;
         })
 
         return (

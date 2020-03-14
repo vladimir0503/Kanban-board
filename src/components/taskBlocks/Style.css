@@ -41,11 +41,11 @@
     background: #FFFFFF;
     border-radius: 5px;
     border: none;
-    transition: 0.5s;
 }
 
 .taskStyleBlock:hover {
     background: #DEDEDE;
+    cursor: pointer;
 }
 
 .taskText {

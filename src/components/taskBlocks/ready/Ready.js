@@ -29,7 +29,7 @@ class Ready extends React.Component {
             className='taskStyle'
             onClick={this.addTask.bind(this)}>
         </div>;
-        
+
         this.setState({
             selectBox: selectBox
         });
@@ -46,18 +46,14 @@ class Ready extends React.Component {
             return <div className='dropDown' key={index}>{item}</div>;
         })
 
-        const readyTasks = this.props.readyTasks.map((item, index) => {
-            return <div className='dropDown' key={index}>{item}</div>;
-        })
-
         return (
             <>
                 <div className='itemBlock'>
                     <p className='titleStyle'>{this.props.title}</p>
                     <div className='inputBlock'>
                         <div className='inputBlock'>
+                            {this.props.readyTasks}
                             {this.state.selectBox}
-                            {readyTasks}
                             {this.state.button}
                         </div>
                     </div>
