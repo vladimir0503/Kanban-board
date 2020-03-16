@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
 import './Style.css';
-import Ready from './ready/Ready'
+import Ready from './Ready'
 
 class Backlog extends React.Component {
 
@@ -11,27 +11,30 @@ class Backlog extends React.Component {
             button: <Button onClick={this.createInput.bind(this)} />,
             input: null,
             inputValue: null,
-            listInit: false,
+            buttonInit: false,
             tasks: [],
-            readyTasks: []
+            taskColumn: []
         }
     }
 
-    addReadyTask(event) {
+    selectTask(event) {
         const task = event.target.textContent;
 
         this.setState({
-            readyTasks: [...this.state.readyTasks, task]
+            taskColumn: [...this.state.taskColumn, task]
         })
+    
     }
 
     createInput() {
-        const input = <input
+        const input = <textarea
+            wrap='hard'
             className='taskStyle' 
             onChange={this.addValue.bind(this)}
             onClick={this.addTask.bind(this)}>
-        </input>;
+        </textarea>;
         this.setState({
+            buttonInit: true,
             button: <Button onClick={this.addTask.bind(this)} />,
             input: input,
             listInit: false
@@ -60,18 +63,12 @@ class Backlog extends React.Component {
 
     render() {
         const taskList = this.state.tasks.map((item, index) => {
-            return <li onClick={this.addReadyTask.bind(this)} 
-            className='taskStyle taskStyleBlock' key={index}><span 
+            return <li onClick = {this.selectTask.bind(this)} className='taskStyle taskStyleBlock' key={index}><span 
             className='taskText'>{item}</span></li>;
         })
-
-        const readyTasks = this.state.readyTasks.map((item, index) => {
-            return <div className='taskStyle taskStyleBlock' key={index}><span 
-            className='taskText'>{item}</span></div>;
-        })
-
+        
         return (
-            <div className='itemBlockContayner'>
+            <div className='itemBlockContainer'>
                 <div>
                     <div className='itemBlock'>
                         <p className='titleStyle'>{this.props.title}</p>
@@ -88,9 +85,10 @@ class Backlog extends React.Component {
                 </div>
                 <div>
                     <Ready title='Ready'
+                        buttonInit={this.state.buttonInit}
                         tasks={taskList}
                         listInit={this.state.inputValue} 
-                        readyTasks={readyTasks} />
+                        taskColumn={this.state.taskColumn} />
                 </div>
             </div>
         )
