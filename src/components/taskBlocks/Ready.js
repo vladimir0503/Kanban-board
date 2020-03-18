@@ -41,6 +41,10 @@ class Ready extends React.Component {
 
     selectTask(event) {
 
+        const index = this.state.transTasks.indexOf(event.target);
+
+        console.log(index);
+    
         const task = event.target.textContent;
 
         this.setState({
@@ -51,6 +55,10 @@ class Ready extends React.Component {
             buttonInit: true,
         })
 
+    }
+
+    test() {
+        console.log('test');
     }
 
     render() {
