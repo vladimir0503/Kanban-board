@@ -40,6 +40,7 @@ class Ready extends React.Component {
     }
 
     selectTask(event) {
+
         const task = event.target.textContent;
 
         this.setState({
@@ -49,12 +50,13 @@ class Ready extends React.Component {
             dropDownInit: false,
             buttonInit: true,
         })
+
     }
 
     render() {
-          
+
         const dropDown = this.state.transTasks.map((item, index) => {
-            return <div onClick={this.selectTask.bind(this)} className='dropDown' key={index}>{item}</div>;
+            return <div onClick={this.selectTask.bind(this)} key={index}>{item}</div>;
         })
 
         const taskColumn = this.props.taskColumn.map((item, index) => {
@@ -77,12 +79,12 @@ class Ready extends React.Component {
                     </div>
                     <div>
                         <ul className='listItemStyle'>
-                            {dropDown}
+                            <div className='dropDown'>{dropDown}</div>
                         </ul>
                     </div>
                 </div>
                 <div>
-                    <InProgress title='In Progress' 
+                    <InProgress title='In Progress'
                         buttonInit={this.state.buttonInit}
                         taskColumn={taskColumn} />
                 </div>

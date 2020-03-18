@@ -18,6 +18,7 @@ class Backlog extends React.Component {
     }
 
     selectTask(event) {
+
         const task = event.target.textContent;
 
         this.setState({
@@ -61,6 +62,10 @@ class Backlog extends React.Component {
         })
     }
 
+    deleteTask = (index) => {
+        
+    }
+
     render() {
         const taskList = this.state.tasks.map((item, index) => {
             return <li onClick = {this.selectTask.bind(this)} className='taskStyle taskStyleBlock' key={index}><span 
@@ -88,7 +93,8 @@ class Backlog extends React.Component {
                         buttonInit={this.state.buttonInit}
                         tasks={taskList}
                         listInit={this.state.inputValue} 
-                        taskColumn={this.state.taskColumn} />
+                        taskColumn={this.state.taskColumn}
+                        deleteTask={this.deleteTask} />
                 </div>
             </div>
         )
