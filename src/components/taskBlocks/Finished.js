@@ -39,24 +39,29 @@ class Finished extends React.Component {
     }
 
     selectTask(event) {
+
+        const index = event.target.getAttribute('index');
         const task = event.target.textContent;
 
         this.setState({
             taskColumn: [...this.state.taskColumn, task],
             transTasks: [],
             selectBox: null,
-            dropDownInit: false
+            dropDownInit: false,
+            buttonInit: true
         })
+
+        this.props.deleteTask(index);
     }
 
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
-            return <div onClick={this.selectTask.bind(this)} className='dropDown' key={index}>{item}</div>;
+            return <div onClick={this.selectTask.bind(this)} className='dropDown' key={item}>{item}</div>;
         })
 
         const taskColumn = this.state.taskColumn.map((item, index) => {
-            return <li className='taskStyle taskStyleBlock' key={index}><span 
+            return <li className='taskStyle taskStyleBlock' key={item}><span 
             className='taskText'>{item}</span></li>;
         })
 

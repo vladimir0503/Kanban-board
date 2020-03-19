@@ -10,7 +10,8 @@ class InProgress extends React.Component {
             selectBox: null,
             buttonInit: false,
             transTasks: [],
-            taskColumn: []
+            taskColumn: [],
+            taskArr: []
         }
     }
 
@@ -35,11 +36,13 @@ class InProgress extends React.Component {
         }
         this.setState({
             dropDownInit: true,
-            transTasks: [...this.state.transTasks, this.props.taskColumn]
+            transTasks: React.Children.toArray([...this.state.transTasks, this.props.taskColumn])
         })
     }
 
     selectTask(event) {
+
+        const index = event.target.getAttribute('index');
         const task = event.target.textContent;
 
         this.setState({
@@ -49,16 +52,26 @@ class InProgress extends React.Component {
             dropDownInit: false,
             buttonInit: true
         })
+
+        this.props.deleteTask(index);
+    }
+
+    deleteTask = (value) => {
+        const newArr = this.state.taskColumn.splice(value, 1);
+
+        this.setState({
+            taskArr: [...this.state.taskColumn, newArr]
+        })
     }
 
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
-            return <div onClick={this.selectTask.bind(this)} className='dropDown' key={index}>{item}</div>;
+            return <div onClick={this.selectTask.bind(this)} key={index} index={index} >{item}</div>;
         })
 
         const taskColumn = this.state.taskColumn.map((item, index) => {
-            return <li className='taskStyle taskStyleBlock' key={index}><span
+            return <li className='taskStyle taskStyleBlock' key={index} index={index}><span
                 className='taskText'>{item}</span></li>;
         })
 
@@ -77,14 +90,15 @@ class InProgress extends React.Component {
                     </div>
                     <div>
                         <ul className='listItemStyle'>
-                            {dropDown}
+                            <div className='dropDown'>{dropDown}</div>
                         </ul>
                     </div>
                 </div>
                 <div>
-                    <Finished title='Finished' 
+                    <Finished title='Finished'
                         buttonInit={this.state.buttonInit}
-                        taskColumn={taskColumn} />
+                        taskColumn={taskColumn} 
+                        deleteTask={this.deleteTask} />
                 </div>
             </div>
         )

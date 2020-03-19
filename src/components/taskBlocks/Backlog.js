@@ -13,7 +13,8 @@ class Backlog extends React.Component {
             inputValue: null,
             buttonInit: false,
             tasks: [],
-            taskColumn: []
+            taskColumn: [],
+            childIndex: null
         }
     }
 
@@ -24,13 +25,14 @@ class Backlog extends React.Component {
         this.setState({
             taskColumn: [...this.state.taskColumn, task]
         })
-    
+
     }
 
     createInput() {
+
         const input = <textarea
             wrap='hard'
-            className='taskStyle' 
+            className='taskStyle'
             onChange={this.addValue.bind(this)}
             onClick={this.addTask.bind(this)}>
         </textarea>;
@@ -60,18 +62,19 @@ class Backlog extends React.Component {
             tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
         })
+
     }
 
-    deleteTask = (index) => {
-        
+    deleteTask = (value) => {
+        this.state.tasks.splice(value, 1);
     }
 
     render() {
         const taskList = this.state.tasks.map((item, index) => {
-            return <li onClick = {this.selectTask.bind(this)} className='taskStyle taskStyleBlock' key={index}><span 
-            className='taskText'>{item}</span></li>;
+            return <li onClick={this.selectTask.bind(this)} className='taskStyle taskStyleBlock' key={item} index={index}><span
+                className='taskText'>{item}</span></li>;
         })
-        
+
         return (
             <div className='itemBlockContainer'>
                 <div>
@@ -92,7 +95,7 @@ class Backlog extends React.Component {
                     <Ready title='Ready'
                         buttonInit={this.state.buttonInit}
                         tasks={taskList}
-                        listInit={this.state.inputValue} 
+                        listInit={this.state.inputValue}
                         taskColumn={this.state.taskColumn}
                         deleteTask={this.deleteTask} />
                 </div>

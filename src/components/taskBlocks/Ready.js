@@ -10,7 +10,8 @@ class Ready extends React.Component {
             selectBox: null,
             buttonInit: false,
             transTasks: [],
-            taskColumn: []
+            taskColumn: [],
+            taskArr: []
         }
     }
 
@@ -35,16 +36,13 @@ class Ready extends React.Component {
         }
         this.setState({
             dropDownInit: true,
-            transTasks: [...this.state.transTasks, this.props.tasks]
+            transTasks: React.Children.toArray([...this.state.transTasks, this.props.tasks])
         })
     }
 
     selectTask(event) {
 
-        const index = this.state.transTasks.indexOf(event.target);
-
-        console.log(index);
-    
+        const index = event.target.getAttribute('index');
         const task = event.target.textContent;
 
         this.setState({
@@ -55,20 +53,25 @@ class Ready extends React.Component {
             buttonInit: true,
         })
 
+        this.props.deleteTask(index);
     }
 
-    test() {
-        console.log('test');
+    deleteTask = (value) => {
+        const newArr = this.state.taskColumn.splice(value, 1);
+
+        this.setState({
+            taskArr: [...this.state.taskColumn, newArr]
+        })
     }
 
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
-            return <div onClick={this.selectTask.bind(this)} key={index}>{item}</div>;
+            return <div onClick={this.selectTask.bind(this)} key={index} index={index} >{item}</div>;
         })
 
-        const taskColumn = this.props.taskColumn.map((item, index) => {
-            return <li className='taskStyle taskStyleBlock' key={index}><span
+        const taskColumn = this.state.taskColumn.map((item, index) => {
+            return <li className='taskStyle taskStyleBlock' key={index} index={index}><span
                 className='taskText'>{item}</span></li>;
         })
 
@@ -94,7 +97,8 @@ class Ready extends React.Component {
                 <div>
                     <InProgress title='In Progress'
                         buttonInit={this.state.buttonInit}
-                        taskColumn={taskColumn} />
+                        taskColumn={taskColumn} 
+                        deleteTask={this.deleteTask} />
                 </div>
             </div>
         )
