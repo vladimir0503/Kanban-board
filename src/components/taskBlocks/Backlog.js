@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
+import Ready from './Ready';
 import './Style.css';
-import Ready from './Ready'
 
 class Backlog extends React.Component {
 
@@ -14,7 +14,9 @@ class Backlog extends React.Component {
             buttonInit: false,
             tasks: [],
             taskColumn: [],
-            childIndex: null
+            childIndex: null,
+            activeTasks: 0,
+            finishedTasks: 0
         }
     }
 
@@ -61,12 +63,27 @@ class Backlog extends React.Component {
             listInit: true,
             tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
+            activeTasks: this.state.tasks.length + 1
         })
 
     }
 
     deleteTask = (value) => {
         this.state.tasks.splice(value, 1);
+    }
+
+    clearActiveTasks = () => {
+        let activeTasks = this.state.activeTasks - 1;
+        this.setState({
+            activeTasks: activeTasks
+        })
+    }
+
+    getFinishedTasks = (value) => {
+        console.log(value);
+        this.setState({
+            finishedTasks: value
+        })
     }
 
     render() {
@@ -76,30 +93,43 @@ class Backlog extends React.Component {
         })
 
         return (
-            <div className='itemBlockContainer'>
-                <div>
-                    <div className='itemBlock'>
-                        <p className='titleStyle'>{this.props.title}</p>
-                        <div className='inputBlock'>
-                            <ul className='listItemStyle'>
-                                {taskList}
-                            </ul>
+            <>
+                <div className='itemBlockContainer'>
+                    <div>
+                        <div className='itemBlock'>
+                            <p className='titleStyle'>{this.props.title}</p>
                             <div className='inputBlock'>
-                                {this.state.input}
-                                {this.state.button}
+                                <ul className='listItemStyle'>
+                                    {taskList}
+                                </ul>
+                                <div className='inputBlock'>
+                                    {this.state.input}
+                                    {this.state.button}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <Ready title='Ready'
+                            buttonInit={this.state.buttonInit}
+                            tasks={taskList}
+                            listInit={this.state.inputValue}
+                            taskColumn={this.state.taskColumn}
+                            deleteTask={this.deleteTask}
+                            clearActiveTasks={this.clearActiveTasks}
+                            getFinishedTasks={this.getFinishedTasks} />
+                    </div>
                 </div>
-                <div>
-                    <Ready title='Ready'
-                        buttonInit={this.state.buttonInit}
-                        tasks={taskList}
-                        listInit={this.state.inputValue}
-                        taskColumn={this.state.taskColumn}
-                        deleteTask={this.deleteTask} />
+                <div className='footer'>
+                    <div className='footerContent'>
+                        <div className='tasksCounter'>
+                            <p>Active tasks: {this.state.activeTasks}</p>
+                            <p>Finished tasks: {this.state.finishedTasks}</p>
+                        </div>
+                        <p>Kanban board by 'NAME', 'YEAR'</p>
+                    </div>
                 </div>
-            </div>
+            </>
         )
     }
 

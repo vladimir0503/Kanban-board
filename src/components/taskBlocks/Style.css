@@ -1,6 +1,7 @@
 
 .itemBlockContainer {
     display: flex;
+    height: 100vh;
 }
 
 .itemBlock {
@@ -64,4 +65,25 @@
     background: white;
     border-radius: 5px;
     position: relative;
+}
+
+.footer {
+    display: flex;
+    background: #0067A3;
+    height: 55px;
+    color: white;
+    margin-top: -94px;
+}
+
+.footerContent {
+    display: flex;
+    width: 1200px;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.tasksCounter {
+    display: flex;
+    justify-content: space-between;
+    width: 252px;
 }

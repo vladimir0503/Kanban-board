@@ -1,5 +1,6 @@
 .commonContainer {
     display: flex;
-    width: 1250px;
+    flex-direction: column;
+    width: 100vw;
     margin: 0 auto;
 }

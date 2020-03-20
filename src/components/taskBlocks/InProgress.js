@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../button/Button';
-import Finished from './Finished'
+import Finished from './Finished';
 
 class InProgress extends React.Component {
     constructor(props) {
@@ -98,7 +98,8 @@ class InProgress extends React.Component {
                     <Finished title='Finished'
                         buttonInit={this.state.buttonInit}
                         taskColumn={taskColumn} 
-                        deleteTask={this.deleteTask} />
+                        deleteTask={this.deleteTask}
+                        getFinishedTasks={this.props.getFinishedTasks} />
                 </div>
             </div>
         )

@@ -1,0 +1,20 @@
+.footerStyle {
+    display: flex;
+    height: 55px;
+    background: #0067A3;
+    width: 100vw;
+}
+
+.tasksBlockStyle {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contentContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    color: white;
+    width: 1250px;
+}

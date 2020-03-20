@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../button/Button';
-import InProgress from './InProgress'
+import InProgress from './InProgress';
 
 class Ready extends React.Component {
     constructor(props) {
@@ -44,7 +44,7 @@ class Ready extends React.Component {
 
         const index = event.target.getAttribute('index');
         const task = event.target.textContent;
-
+        
         this.setState({
             taskColumn: [...this.state.taskColumn, task],
             transTasks: [],
@@ -54,6 +54,7 @@ class Ready extends React.Component {
         })
 
         this.props.deleteTask(index);
+        this.props.clearActiveTasks();
     }
 
     deleteTask = (value) => {
@@ -98,7 +99,8 @@ class Ready extends React.Component {
                     <InProgress title='In Progress'
                         buttonInit={this.state.buttonInit}
                         taskColumn={taskColumn} 
-                        deleteTask={this.deleteTask} />
+                        deleteTask={this.deleteTask}
+                        getFinishedTasks={this.props.getFinishedTasks} />
                 </div>
             </div>
         )

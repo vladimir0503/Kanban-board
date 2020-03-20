@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../button/Button'; 
+import Button from '../button/Button';
 
 class Finished extends React.Component {
     constructor(props) {
@@ -9,7 +9,8 @@ class Finished extends React.Component {
             selectBox: null,
             buttonInit: false,
             transTasks: [],
-            taskColumn: []
+            taskColumn: [],
+            finishedTasks: 0
         }
     }
 
@@ -48,10 +49,12 @@ class Finished extends React.Component {
             transTasks: [],
             selectBox: null,
             dropDownInit: false,
-            buttonInit: true
+            buttonInit: true,
+            finishedTasks: this.state.taskColumn.length + 1
         })
 
         this.props.deleteTask(index);
+        this.props.getFinishedTasks(this.state.finishedTasks + 1);
     }
 
     render() {
@@ -61,8 +64,8 @@ class Finished extends React.Component {
         })
 
         const taskColumn = this.state.taskColumn.map((item, index) => {
-            return <li className='taskStyle taskStyleBlock' key={item}><span 
-            className='taskText'>{item}</span></li>;
+            return <li className='taskStyle taskStyleBlock' key={item}><span
+                className='taskText'>{item}</span></li>;
         })
 
         return (
