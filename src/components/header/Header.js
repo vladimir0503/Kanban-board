@@ -16,9 +16,9 @@ class Header extends React.Component {
 
     userMenu() {
 
-        const dropDownMenu = <div className='dropDownContayner' style={{ opacity: this.state.opacity, display: this.state.display }}>
+        const dropDownMenu = <div className='dropDownContayner'>
             <div className='dropDownArrow'></div>
-            <ul className='dropDownMenu' style={{ opacity: this.state.opacity }}>
+            <ul className='dropDownMenu'>
                 <li><p className='menuItem'>My account</p></li>
                 <li><p className='menuItem'>My tasks</p></li>
                 <li><p className='menuItem'>Log out</p></li>
