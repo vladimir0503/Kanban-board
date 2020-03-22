@@ -120,8 +120,8 @@ class Backlog extends React.Component {
                             getFinishedTasks={this.getFinishedTasks} />
                     </div>
                 </div>
-                <div className='footer'>
-                    <div className='footerContent'>
+                <div className='border'>
+                    <div className='borderContent'>
                         <div className='tasksCounter'>
                             <p>Active tasks: {this.state.activeTasks}</p>
                             <p>Finished tasks: {this.state.finishedTasks}</p>
