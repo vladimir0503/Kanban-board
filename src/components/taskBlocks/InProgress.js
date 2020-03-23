@@ -77,7 +77,7 @@ class InProgress extends React.Component {
 
         return (
             <div className='itemBlockContainer'>
-                <div>
+                <div className='columnBlock followColumn'>
                     <div className='itemBlock'>
                         <p className='titleStyle'>{this.props.title}</p>
                         <div className='inputBlock'>

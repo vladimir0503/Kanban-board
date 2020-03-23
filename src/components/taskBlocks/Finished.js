@@ -69,7 +69,7 @@ class Finished extends React.Component {
         })
 
         return (
-            <div>
+            <div className='columnBlock'>
                 <div className='itemBlock'>
                     <p className='titleStyle'>{this.props.title}</p>
                     <div className='inputBlock'>

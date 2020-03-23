@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
 import Ready from './Ready';
+import './ItemColumn.css';
 import './Style.css';
 
 class Backlog extends React.Component {
@@ -80,7 +81,6 @@ class Backlog extends React.Component {
     }
 
     getFinishedTasks = (value) => {
-        console.log(value);
         this.setState({
             finishedTasks: value
         })
@@ -95,7 +95,7 @@ class Backlog extends React.Component {
         return (
             <>
                 <div className='itemBlockContainer'>
-                    <div>
+                    <div className='columnBlock firstColumn'>
                         <div className='itemBlock'>
                             <p className='titleStyle'>{this.props.title}</p>
                             <div className='inputBlock'>
