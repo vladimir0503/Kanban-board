@@ -4,19 +4,23 @@ import Finished from './Finished';
 
 class InProgress extends React.Component {
     constructor(props) {
+
         super(props);
         this.state = {
             button: <Button onClick={this.createSelect.bind(this)} />,
             selectBox: null,
-            buttonInit: false,
             transTasks: [],
             taskColumn: [],
-            taskArr: []
+            taskArr: [],
+            disableButton: null
         }
     }
 
     createSelect() {
-        if (this.props.buttonInit === false) {
+        if (this.props.quantityTasks === 0) {
+            this.setState({
+                disableButton: null
+            })
             return
         }
 
@@ -26,7 +30,9 @@ class InProgress extends React.Component {
         </div>;
 
         this.setState({
-            selectBox: selectBox
+            disableButton: 'none',
+            selectBox: selectBox,
+            button: <Button onClick={this.createSelect.bind(this)} />
         });
     }
 
@@ -49,8 +55,7 @@ class InProgress extends React.Component {
             taskColumn: [...this.state.taskColumn, task],
             transTasks: [],
             selectBox: null,
-            dropDownInit: false,
-            buttonInit: true
+            dropDownInit: false
         })
 
         this.props.deleteTask(index);
@@ -84,7 +89,12 @@ class InProgress extends React.Component {
                             <div className='inputBlock'>
                                 {taskColumn}
                                 {this.state.selectBox}
-                                {this.state.button}
+                                <div>
+                                    {this.state.button}
+                                    <div onClick={this.createSelect.bind(this)}
+                                        className='disableButton'
+                                        style={{ display: this.state.disableButton }}></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,10 +106,10 @@ class InProgress extends React.Component {
                 </div>
                 <div>
                     <Finished title='Finished'
-                        buttonInit={this.state.buttonInit}
-                        taskColumn={taskColumn} 
+                        taskColumn={taskColumn}
                         deleteTask={this.deleteTask}
-                        getFinishedTasks={this.props.getFinishedTasks} />
+                        getFinishedTasks={this.props.getFinishedTasks}
+                        quantityTasks={taskColumn.length} />
                 </div>
             </div>
         )

@@ -7,6 +7,7 @@ import './Style.css';
 class Backlog extends React.Component {
 
     constructor(props) {
+
         super(props);
         this.state = {
             button: <Button onClick={this.createInput.bind(this)} />,
@@ -17,7 +18,8 @@ class Backlog extends React.Component {
             taskColumn: [],
             childIndex: null,
             activeTasks: 0,
-            finishedTasks: 0
+            finishedTasks: 0,
+            disableButton: null
         }
     }
 
@@ -104,7 +106,11 @@ class Backlog extends React.Component {
                                 </ul>
                                 <div className='inputBlock'>
                                     {this.state.input}
-                                    {this.state.button}
+                                    <div>
+                                        {this.state.button}
+                                        <div className='disableButton'
+                                            style={{ display: 'none' }}></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +123,8 @@ class Backlog extends React.Component {
                             taskColumn={this.state.taskColumn}
                             deleteTask={this.deleteTask}
                             clearActiveTasks={this.clearActiveTasks}
-                            getFinishedTasks={this.getFinishedTasks} />
+                            getFinishedTasks={this.getFinishedTasks}
+                            quantityTasks={this.state.activeTasks} />
                     </div>
                 </div>
                 <div className='border'>

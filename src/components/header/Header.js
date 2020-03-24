@@ -8,7 +8,7 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userMenu: <img src={userMenuUp} alt='userMenu'></img>,
+            userMenu: <img src={userMenuDown} alt='userMenu'></img>,
             click: false,
             dropDownMenu: null
         }
@@ -27,13 +27,13 @@ class Header extends React.Component {
 
         if (this.state.click === false) {
             this.setState({
-                userMenu: <img src={userMenuDown} alt='userMenu'></img>,
+                userMenu: <img src={userMenuUp} alt='userMenu'></img>,
                 dropDownMenu: dropDownMenu,
                 click: !this.state.click
             })
         } else {
             this.setState({
-                userMenu: <img src={userMenuUp} alt='userMenu'></img>,
+                userMenu: <img src={userMenuDown} alt='userMenu'></img>,
                 dropDownMenu: null,
                 click: !this.state.click
             })

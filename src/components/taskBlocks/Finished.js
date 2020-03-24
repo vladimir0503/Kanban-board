@@ -3,6 +3,7 @@ import Button from '../button/Button';
 
 class Finished extends React.Component {
     constructor(props) {
+
         super(props);
         this.state = {
             button: <Button onClick={this.createSelect.bind(this)} />,
@@ -10,12 +11,16 @@ class Finished extends React.Component {
             buttonInit: false,
             transTasks: [],
             taskColumn: [],
+            disableButton: null,
             finishedTasks: 0
         }
     }
 
     createSelect() {
-        if (this.props.buttonInit === false) {
+        if (this.props.quantityTasks === 0) {
+            this.setState({
+                disableButton: null
+            })
             return
         }
 
@@ -25,7 +30,9 @@ class Finished extends React.Component {
         </div>;
 
         this.setState({
-            selectBox: selectBox
+            disableButton: 'none',
+            selectBox: selectBox,
+            button: <Button onClick={this.createSelect.bind(this)} />
         });
     }
 
@@ -76,7 +83,12 @@ class Finished extends React.Component {
                         <div className='inputBlock'>
                             {taskColumn}
                             {this.state.selectBox}
-                            {this.state.button}
+                            <div>
+                                {this.state.button}
+                                <div onClick={this.createSelect.bind(this)}
+                                    className='disableButton'
+                                    style={{ display: this.state.disableButton }}></div>
+                            </div>
                         </div>
                     </div>
                 </div>
