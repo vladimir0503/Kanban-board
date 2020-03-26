@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '../button/Button';
 import Finished from './Finished';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import ItemsPage from './tasksRouter/ItemsPage'
 
 class InProgress extends React.Component {
     constructor(props) {
@@ -12,7 +14,11 @@ class InProgress extends React.Component {
             transTasks: [],
             taskColumn: [],
             taskArr: [],
-            disableButton: null
+            disableButton: null,
+            pagePosition: {
+                margin: '-686px',
+                padding: '1px',
+            }
         }
     }
 
@@ -80,38 +86,47 @@ class InProgress extends React.Component {
                 className='taskText'>{item}</span></li>;
         })
 
+        const InProgress = () => <ItemsPage
+            title='In Progress'
+            taskColumn={this.state.taskColumn}
+            pagePosition={this.state.pagePosition.margin}
+            pagePadding={this.state.pagePosition.padding} />
+
         return (
-            <div className='itemBlockContainer'>
-                <div className='columnBlock followColumn'>
-                    <div className='itemBlock'>
-                        <p className='titleStyle'>{this.props.title}</p>
-                        <div className='inputBlock'>
+            <Router>
+            <Route path='/inProgress' component={InProgress} />
+                <div className='itemBlockContainer'>
+                    <div className='columnBlock followColumn'>
+                        <div className='itemBlock'>
+                        <p className='titleStyle'><Link className='linkStyle' to='/inProgress'>{this.props.title}</Link></p>
                             <div className='inputBlock'>
-                                {taskColumn}
-                                {this.state.selectBox}
-                                <div>
-                                    {this.state.button}
-                                    <div onClick={this.createSelect.bind(this)}
-                                        className='disableButton'
-                                        style={{ display: this.state.disableButton }}></div>
+                                <div className='inputBlock'>
+                                    {taskColumn}
+                                    {this.state.selectBox}
+                                    <div>
+                                        {this.state.button}
+                                        <div onClick={this.createSelect.bind(this)}
+                                            className='disableButton'
+                                            style={{ display: this.state.disableButton }}></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <ul className='listItemStyle'>
+                                <div className='dropDown'>{dropDown}</div>
+                            </ul>
+                        </div>
                     </div>
                     <div>
-                        <ul className='listItemStyle'>
-                            <div className='dropDown'>{dropDown}</div>
-                        </ul>
+                        <Finished title='Finished'
+                            taskColumn={taskColumn}
+                            deleteTask={this.deleteTask}
+                            getFinishedTasks={this.props.getFinishedTasks}
+                            quantityTasks={taskColumn.length} />
                     </div>
                 </div>
-                <div>
-                    <Finished title='Finished'
-                        taskColumn={taskColumn}
-                        deleteTask={this.deleteTask}
-                        getFinishedTasks={this.props.getFinishedTasks}
-                        quantityTasks={taskColumn.length} />
-                </div>
-            </div>
+            </Router>
         )
     }
 

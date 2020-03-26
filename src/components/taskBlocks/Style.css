@@ -124,3 +124,8 @@
     opacity: 100;
     margin-top: -26px;
 }
+
+.linkStyle {
+    text-decoration: none;
+    color: black;
+}

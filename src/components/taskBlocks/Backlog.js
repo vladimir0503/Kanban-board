@@ -1,8 +1,10 @@
 import React from 'react';
 import Button from '../button/Button';
 import Ready from './Ready';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import ItemsPage from './tasksRouter/ItemsPage';
 import './ItemColumn.css';
-import './Style.css';
+import './Style.css'
 
 class Backlog extends React.Component {
 
@@ -19,7 +21,9 @@ class Backlog extends React.Component {
             childIndex: null,
             activeTasks: 0,
             finishedTasks: 0,
-            disableButton: null
+            disableButton: null,
+            linkCheck: false,
+            taskDescrPos: '-132px'
         }
     }
 
@@ -94,12 +98,18 @@ class Backlog extends React.Component {
                 className='taskText'>{item}</span></li>;
         })
 
+        const Page = () => <ItemsPage
+            title='Backlog'
+            taskColumn={this.state.tasks}
+            taskDescrPos={this.state.taskDescrPos} />
+
         return (
-            <>
+            <Router>
+            <Route path='/backlog' component={Page} />
                 <div className='itemBlockContainer'>
                     <div className='columnBlock firstColumn'>
                         <div className='itemBlock'>
-                            <p className='titleStyle'>{this.props.title}</p>
+                            <p className='titleStyle'><Link className='linkStyle' to='/backlog'>{this.props.title}</Link></p>
                             <div className='inputBlock'>
                                 <ul className='listItemStyle'>
                                     {taskList}
@@ -136,7 +146,7 @@ class Backlog extends React.Component {
                         <p>Kanban board by 'NAME', 'YEAR'</p>
                     </div>
                 </div>
-            </>
+            </Router>
         )
     }
 

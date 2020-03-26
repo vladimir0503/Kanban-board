@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '../button/Button';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import ItemsPage from './tasksRouter/ItemsPage'
 
 class Finished extends React.Component {
     constructor(props) {
@@ -12,7 +14,11 @@ class Finished extends React.Component {
             transTasks: [],
             taskColumn: [],
             disableButton: null,
-            finishedTasks: 0
+            finishedTasks: 0,
+            pagePosition: {
+                margin: '-987px',
+                padding: '1px'
+            }
         }
     }
 
@@ -75,29 +81,38 @@ class Finished extends React.Component {
                 className='taskText'>{item}</span></li>;
         })
 
+        const Finished = () => <ItemsPage
+            title='Finished'
+            taskColumn={this.state.taskColumn}
+            pagePosition={this.state.pagePosition.margin}
+            pagePadding={this.state.pagePosition.padding} />
+
         return (
-            <div className='columnBlock'>
-                <div className='itemBlock'>
-                    <p className='titleStyle'>{this.props.title}</p>
-                    <div className='inputBlock'>
+            <Router>
+            <Route path='/finished' component={Finished} />
+                <div className='columnBlock'>
+                    <div className='itemBlock'>
+                    <p className='titleStyle'><Link className='linkStyle' to='/finished'>{this.props.title}</Link></p>
                         <div className='inputBlock'>
-                            {taskColumn}
-                            {this.state.selectBox}
-                            <div>
-                                {this.state.button}
-                                <div onClick={this.createSelect.bind(this)}
-                                    className='disableButton'
-                                    style={{ display: this.state.disableButton }}></div>
+                            <div className='inputBlock'>
+                                {taskColumn}
+                                {this.state.selectBox}
+                                <div>
+                                    {this.state.button}
+                                    <div onClick={this.createSelect.bind(this)}
+                                        className='disableButton'
+                                        style={{ display: this.state.disableButton }}></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <ul className='listItemStyle'>
+                            {dropDown}
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <ul className='listItemStyle'>
-                        {dropDown}
-                    </ul>
-                </div>
-            </div>
+            </Router>
         )
     }
 

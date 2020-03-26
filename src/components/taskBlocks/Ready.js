@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '../button/Button';
 import InProgress from './InProgress';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import ItemsPage from './tasksRouter/ItemsPage'
 
 class Ready extends React.Component {
     constructor(props) {
@@ -12,7 +14,11 @@ class Ready extends React.Component {
             transTasks: [],
             taskColumn: [],
             taskArr: [],
-            disableButton: null
+            disableButton: null,
+            pagePosition: {
+                margin: '-383px',
+                padding: '1px',
+            } 
         }
     }
 
@@ -82,38 +88,48 @@ class Ready extends React.Component {
                 className='taskText'>{item}</span></li>;
         })
 
+        const Ready = () => <ItemsPage
+            title='Ready'
+            taskColumn={this.state.taskColumn}
+            pagePosition={this.state.pagePosition.margin}
+            pagePadding={this.state.pagePosition.padding}
+            taskDescrPos={this.state.pagePosition.taskDescrPos} />
+
         return (
-            <div className='itemBlockContainer'>
-                <div className='columnBlock followColumn'>
-                    <div className='itemBlock'>
-                        <p className='titleStyle'>{this.props.title}</p>
-                        <div className='inputBlock'>
+            <Router>
+            <Route path='/ready' component={Ready} />
+                <div className='itemBlockContainer'>
+                    <div className='columnBlock followColumn'>
+                        <div className='itemBlock'>
+                            <p className='titleStyle'><Link className='linkStyle' to='/ready'>{this.props.title}</Link></p>
                             <div className='inputBlock'>
-                                {taskColumn}
-                                {this.state.selectBox}
-                                <div>
-                                    {this.state.button}
-                                    <div onClick={this.createSelect.bind(this)}
-                                        className='disableButton'
-                                        style={{ display: this.state.disableButton }}></div>
+                                <div className='inputBlock'>
+                                    {taskColumn}
+                                    {this.state.selectBox}
+                                    <div>
+                                        {this.state.button}
+                                        <div onClick={this.createSelect.bind(this)}
+                                            className='disableButton'
+                                            style={{ display: this.state.disableButton }}></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <ul className='listItemStyle'>
+                                <div className='dropDown'>{dropDown}</div>
+                            </ul>
+                        </div>
                     </div>
                     <div>
-                        <ul className='listItemStyle'>
-                            <div className='dropDown'>{dropDown}</div>
-                        </ul>
+                        <InProgress title='In Progress'
+                            taskColumn={taskColumn}
+                            deleteTask={this.deleteTask}
+                            getFinishedTasks={this.props.getFinishedTasks}
+                            quantityTasks={taskColumn.length} />
                     </div>
                 </div>
-                <div>
-                    <InProgress title='In Progress'
-                        taskColumn={taskColumn}
-                        deleteTask={this.deleteTask}
-                        getFinishedTasks={this.props.getFinishedTasks}
-                        quantityTasks={taskColumn.length} />
-                </div>
-            </div>
+            </Router>
         )
     }
 
