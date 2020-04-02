@@ -4,7 +4,8 @@ import Ready from './Ready';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
 import './ItemColumn.css';
-import './Style.css'
+import './Style.css';
+import ExternalClickInit from './ExternalClickInit';
 
 class Backlog extends React.Component {
 
@@ -23,7 +24,9 @@ class Backlog extends React.Component {
             finishedTasks: 0,
             disableButton: null,
             linkCheck: false,
-            taskDescrPos: '-132px'
+            taskDescrPos: '-132px',
+            clickInit: false,
+            inputNone: null
         }
     }
 
@@ -39,17 +42,19 @@ class Backlog extends React.Component {
 
     createInput() {
 
-        const input = <textarea
-            wrap='hard'
+        const input = <input
+            autoFocus={true}
+            id='input'
             className='taskStyle'
             onChange={this.addValue.bind(this)}
             onClick={this.addTask.bind(this)}>
-        </textarea>;
+        </input>;
         this.setState({
             buttonInit: true,
-            button: <Button onClick={this.addTask.bind(this)} />,
             input: input,
-            listInit: false
+            listInit: false,
+            clickInit: false,
+            inputNone: null
         });
     }
 
@@ -70,7 +75,8 @@ class Backlog extends React.Component {
             listInit: true,
             tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
-            activeTasks: this.state.tasks.length + 1
+            activeTasks: this.state.tasks.length + 1,
+            clickInit: false
         })
 
     }
@@ -92,9 +98,25 @@ class Backlog extends React.Component {
         })
     }
 
+    hideDropdown = () => {
+        if (this.state.input === null) {
+            return
+        }
+        
+        document.getElementById('input').value = '';
+        this.setState({
+            inputValue: null,
+            inputNone: 'none'
+        })
+    }
+
+    linkTest(even) {
+
+    }
+
     render() {
         const taskList = this.state.tasks.map((item, index) => {
-            return <li onClick={this.selectTask.bind(this)} className='taskStyle taskStyleBlock' key={item} index={index}><span
+            return <li onClick={this.selectTask.bind(this)} className='taskStyle' key={item} index={index}><span
                 className='taskText'>{item}</span></li>;
         })
 
@@ -105,26 +127,30 @@ class Backlog extends React.Component {
 
         return (
             <Router>
-            <Route path='/backlog' component={Page} />
+                <Route path='/backlog' component={Page} />
                 <div className='itemBlockContainer'>
-                    <div className='columnBlock firstColumn'>
-                        <div className='itemBlock'>
-                            <p className='titleStyle'><Link className='linkStyle' to='/backlog'>{this.props.title}</Link></p>
-                            <div className='inputBlock'>
-                                <ul className='listItemStyle'>
-                                    {taskList}
-                                </ul>
+                    <ExternalClickInit hideDropdown={this.hideDropdown}>
+                        <div className='columnBlock firstColumn'>
+                            <div className='itemBlock'>
+                                <p className='titleStyle'><Link className='linkStyle' to='/backlog'>{this.props.title}</Link></p>
                                 <div className='inputBlock'>
-                                    {this.state.input}
-                                    <div>
-                                        {this.state.button}
-                                        <div className='disableButton'
-                                            style={{ display: 'none' }}></div>
+                                    <ul className='listItemStyle'>
+                                        {taskList}
+                                    </ul>
+                                    <div className='inputBlock'>
+                                        <div style={{margin: '0 auto', display: this.state.inputNone}}>
+                                            {this.state.input}
+                                        </div>
+                                        <div>
+                                            {this.state.button}
+                                            <div className='disableButton'
+                                                style={{ display: 'none' }}></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </ExternalClickInit>
                     <div>
                         <Ready title='Ready'
                             buttonInit={this.state.buttonInit}
@@ -143,7 +169,7 @@ class Backlog extends React.Component {
                             <p>Active tasks: {this.state.activeTasks}</p>
                             <p>Finished tasks: {this.state.finishedTasks}</p>
                         </div>
-                        <p>Kanban board by 'NAME', 'YEAR'</p>
+                        <p>Kanban board by Vladimir, 2020.</p>
                     </div>
                 </div>
             </Router>

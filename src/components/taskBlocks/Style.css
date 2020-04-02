@@ -23,8 +23,6 @@
     overflow: auto;
 }
 
-
-
 .itemBlock::-webkit-scrollbar-button { 
     background-color: #EBECF0; 
     height: 40px;  
@@ -67,18 +65,13 @@
     padding-top: 10px;
 }
 
-.taskStyleBlock:hover {
-    background: #DEDEDE;
-    cursor: pointer;
-}
-
 .taskText {
     position: relative;
     left: 13px;
-    bottom: 6px;
 }
 
 .dropDown {
+    cursor: pointer;
     margin-top: -37px;
     margin-left: 12px;
     width: 258px;
@@ -128,4 +121,9 @@
 .linkStyle {
     text-decoration: none;
     color: black;
+}
+
+.selectBtn {
+    margin-left: 227px;
+    cursor: pointer;
 }

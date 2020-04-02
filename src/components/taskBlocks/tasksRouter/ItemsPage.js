@@ -5,9 +5,10 @@ import button from '../../images/button.png';
 class ItemsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             taskInfo: null,
-            taskColumnPos: null
+            taskColumnPos: null,
+            displayStyle: null
         }
     }
 
@@ -37,6 +38,9 @@ class ItemsPage extends React.Component {
             taskInfo: taskInfo,
             taskColumnPos: '-303px',
         })
+
+        console.log('test show info');
+
     }
 
     removeInfo() {
@@ -46,12 +50,17 @@ class ItemsPage extends React.Component {
         })
     }
 
-    render() {
+    render() { 
         return (
-            <div className='contentContayner' style={{ marginLeft: this.props.pagePosition, paddingTop: this.props.pagePadding }}>
+            <div className='contentContayner' style={{marginLeft: this.props.pagePosition, paddingTop: this.props.pagePadding }}>
                 {this.state.taskInfo}
-                <h2 className='title'>{this.props.title}</h2>
-                <ul className='taskColumn' style={{marginTop: this.state.taskColumnPos}}>
+                <div className='titleBlock'>
+                    <h2 className='title'>{this.props.title}</h2>
+                    <div>
+                        <img className='removeInfoBtn' src={button} alt='button'></img>
+                    </div>
+                </div>
+                <ul className='taskColumn' style={{ marginTop: this.state.taskColumnPos }}>
                     {this.props.taskColumn.map((item, index) => {
                         return <li className='task' onClick={this.showInfo.bind(this)} key={index}>{item}</li>
                     })}

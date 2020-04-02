@@ -2,7 +2,9 @@ import React from 'react';
 import Button from '../button/Button';
 import Finished from './Finished';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ItemsPage from './tasksRouter/ItemsPage'
+import ItemsPage from './tasksRouter/ItemsPage';
+import ExternalClickInit from './ExternalClickInit';
+import selectBtn from '../images/selectBtn.png'
 
 class InProgress extends React.Component {
     constructor(props) {
@@ -32,7 +34,9 @@ class InProgress extends React.Component {
 
         const selectBox = <div
             className='taskStyle'
+            style={{ cursor: 'pointer' }}
             onClick={this.addTask.bind(this)}>
+            <img className='selectBtn' src={selectBtn} alt='selectBtn'></img>
         </div>;
 
         this.setState({
@@ -43,11 +47,7 @@ class InProgress extends React.Component {
     }
 
     addTask() {
-        if (this.state.dropDownInit === true) {
-            return
-        }
         this.setState({
-            dropDownInit: true,
             transTasks: React.Children.toArray([...this.state.transTasks, this.props.taskColumn])
         })
     }
@@ -75,6 +75,13 @@ class InProgress extends React.Component {
         })
     }
 
+    hideDropdown = () => {
+        this.setState({
+            transTasks: [],
+            selectBox: null
+        })
+    }
+
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
@@ -94,30 +101,33 @@ class InProgress extends React.Component {
 
         return (
             <Router>
-            <Route path='/inProgress' component={InProgress} />
+                <Route path='/inProgress' component={InProgress} />
                 <div className='itemBlockContainer'>
-                    <div className='columnBlock followColumn'>
-                        <div className='itemBlock'>
-                        <p className='titleStyle'><Link className='linkStyle' to='/inProgress'>{this.props.title}</Link></p>
-                            <div className='inputBlock'>
+                    <ExternalClickInit hideDropdown={this.hideDropdown}>
+                        <div className='columnBlock followColumn'>
+                            <div className='itemBlock'>
+                                <p className='titleStyle'><Link className='linkStyle' to='/inProgress'>{this.props.title}</Link></p>
                                 <div className='inputBlock'>
-                                    {taskColumn}
-                                    {this.state.selectBox}
-                                    <div>
-                                        {this.state.button}
-                                        <div onClick={this.createSelect.bind(this)}
-                                            className='disableButton'
-                                            style={{ display: this.state.disableButton }}></div>
+                                    <div className='inputBlock'>
+                                        {taskColumn}
+                                        {this.state.selectBox}
+                                        <div>
+                                            {this.state.button}
+                                            <div onClick={this.createSelect.bind(this)}
+                                                className='disableButton'
+                                                style={{ display: this.state.disableButton }}></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div>
+                                <ul className='listItemStyle'>
+                                    <div className='dropDown'>{dropDown}</div>
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <ul className='listItemStyle'>
-                                <div className='dropDown'>{dropDown}</div>
-                            </ul>
-                        </div>
-                    </div>
+                    </ExternalClickInit>
                     <div>
                         <Finished title='Finished'
                             taskColumn={taskColumn}

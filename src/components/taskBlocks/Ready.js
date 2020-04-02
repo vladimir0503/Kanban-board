@@ -2,7 +2,9 @@ import React from 'react';
 import Button from '../button/Button';
 import InProgress from './InProgress';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ItemsPage from './tasksRouter/ItemsPage'
+import ItemsPage from './tasksRouter/ItemsPage';
+import ExternalClickInit from './ExternalClickInit';
+import selectBtn from '../images/selectBtn.png'
 
 class Ready extends React.Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class Ready extends React.Component {
             pagePosition: {
                 margin: '-383px',
                 padding: '1px',
-            } 
+            }
         }
     }
 
@@ -32,7 +34,9 @@ class Ready extends React.Component {
 
         const selectBox = <div
             className='taskStyle'
+            style={{ cursor: 'pointer' }}
             onClick={this.addTask.bind(this)}>
+            <img className='selectBtn' src={selectBtn} alt='selectBtn'></img>
         </div>;
 
         this.setState({
@@ -44,11 +48,7 @@ class Ready extends React.Component {
     }
 
     addTask() {
-        if (this.state.dropDownInit === true) {
-            return
-        }
         this.setState({
-            dropDownInit: true,
             transTasks: React.Children.toArray([...this.state.transTasks, this.props.tasks])
         })
     }
@@ -77,6 +77,13 @@ class Ready extends React.Component {
         })
     }
 
+    hideDropdown = () => {
+        this.setState({
+            transTasks: [],
+            selectBox: null
+        })
+    }
+
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
@@ -84,7 +91,7 @@ class Ready extends React.Component {
         })
 
         const taskColumn = this.state.taskColumn.map((item, index) => {
-            return <li className='taskStyle taskStyleBlock' key={index} index={index}><span
+            return <li className='taskStyle' key={index} index={index}><span
                 className='taskText'>{item}</span></li>;
         })
 
@@ -97,30 +104,32 @@ class Ready extends React.Component {
 
         return (
             <Router>
-            <Route path='/ready' component={Ready} />
+                <Route path='/ready' component={Ready} />
                 <div className='itemBlockContainer'>
-                    <div className='columnBlock followColumn'>
-                        <div className='itemBlock'>
-                            <p className='titleStyle'><Link className='linkStyle' to='/ready'>{this.props.title}</Link></p>
-                            <div className='inputBlock'>
+                    <ExternalClickInit hideDropdown={this.hideDropdown}>
+                        <div className='columnBlock followColumn'>
+                            <div className='itemBlock'>
+                                <p className='titleStyle'><Link className='linkStyle' to='/ready'>{this.props.title}</Link></p>
                                 <div className='inputBlock'>
-                                    {taskColumn}
-                                    {this.state.selectBox}
-                                    <div>
-                                        {this.state.button}
-                                        <div onClick={this.createSelect.bind(this)}
-                                            className='disableButton'
-                                            style={{ display: this.state.disableButton }}></div>
+                                    <div className='inputBlock'>
+                                        {taskColumn}
+                                        {this.state.selectBox}
+                                        <div>
+                                            {this.state.button}
+                                            <div onClick={this.createSelect.bind(this)}
+                                                className='disableButton'
+                                                style={{ display: this.state.disableButton }}></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <ul className='listItemStyle'>
+                                    <div className='dropDown'>{dropDown}</div>
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <ul className='listItemStyle'>
-                                <div className='dropDown'>{dropDown}</div>
-                            </ul>
-                        </div>
-                    </div>
+                    </ExternalClickInit>
                     <div>
                         <InProgress title='In Progress'
                             taskColumn={taskColumn}

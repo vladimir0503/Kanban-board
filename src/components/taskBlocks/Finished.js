@@ -1,7 +1,9 @@
 import React from 'react';
 import Button from '../button/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ItemsPage from './tasksRouter/ItemsPage'
+import ItemsPage from './tasksRouter/ItemsPage';
+import ExternalClickInit from './ExternalClickInit';
+import selectBtn from '../images/selectBtn.png'
 
 class Finished extends React.Component {
     constructor(props) {
@@ -32,7 +34,9 @@ class Finished extends React.Component {
 
         const selectBox = <div
             className='taskStyle'
+            style={{ cursor: 'pointer' }}
             onClick={this.addTask.bind(this)}>
+            <img className='selectBtn' src={selectBtn} alt='selectBtn'></img>
         </div>;
 
         this.setState({
@@ -43,11 +47,7 @@ class Finished extends React.Component {
     }
 
     addTask() {
-        if (this.state.dropDownInit === true) {
-            return
-        }
         this.setState({
-            dropDownInit: true,
             transTasks: [...this.state.transTasks, this.props.taskColumn]
         })
     }
@@ -70,6 +70,13 @@ class Finished extends React.Component {
         this.props.getFinishedTasks(this.state.finishedTasks + 1);
     }
 
+    hideDropdown = () => {
+        this.setState({
+            transTasks: [],
+            selectBox: null
+        })
+    }
+
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
@@ -88,31 +95,37 @@ class Finished extends React.Component {
             pagePadding={this.state.pagePosition.padding} />
 
         return (
-            <Router>
-            <Route path='/finished' component={Finished} />
-                <div className='columnBlock'>
-                    <div className='itemBlock'>
-                    <p className='titleStyle'><Link className='linkStyle' to='/finished'>{this.props.title}</Link></p>
-                        <div className='inputBlock'>
-                            <div className='inputBlock'>
-                                {taskColumn}
-                                {this.state.selectBox}
-                                <div>
-                                    {this.state.button}
-                                    <div onClick={this.createSelect.bind(this)}
-                                        className='disableButton'
-                                        style={{ display: this.state.disableButton }}></div>
+            <ExternalClickInit hideDropdown={this.hideDropdown}>
+                <Router>
+                    <Route path='/finished' component={Finished} />
+                    <ExternalClickInit hideDropdown={this.hideDropdown}>
+                        <div className='columnBlock'>
+                            <div className='itemBlock'>
+                                <p className='titleStyle'><Link className='linkStyle' to='/finished'>{this.props.title}</Link></p>
+                                <div className='inputBlock'>
+                                    <div className='inputBlock'>
+                                        {taskColumn}
+                                        <div>
+                                            {this.state.selectBox}
+                                        </div>
+                                        <div>
+                                            {this.state.button}
+                                            <div onClick={this.createSelect.bind(this)}
+                                                className='disableButton'
+                                                style={{ display: this.state.disableButton }}></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div>
+                                <ul className='listItemStyle'>
+                                    {dropDown}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <ul className='listItemStyle'>
-                            {dropDown}
-                        </ul>
-                    </div>
-                </div>
-            </Router>
+                    </ExternalClickInit>
+                </Router>
+            </ExternalClickInit>
         )
     }
 
