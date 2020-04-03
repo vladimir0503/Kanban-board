@@ -154,7 +154,7 @@ class Backlog extends React.Component {
                 <Route path='/backlog' component={Page} />
                 <div className='itemBlockContainer'>
                     <div className='columnBlock firstColumn'>
-                        <div className='itemBlock'>
+                        <div className='itemBlock firstBlock'>
                             <p className='titleStyle'><Link className='linkStyle' to='/backlog' >{this.props.title}</Link></p>
                             <div className='inputBlock'>
                                 <ul className='listItemStyle'>

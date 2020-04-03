@@ -10,9 +10,11 @@
     z-index: 10;
 }
 
-/* .title {
-    margin-left: 23px;
-} */
+@media screen and (max-width: 1300px) {
+    .contentContayner {
+        display: none;
+    }
+}
 
 .titleStyle {
     font-size: 24px;

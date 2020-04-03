@@ -1,13 +1,35 @@
+::-webkit-scrollbar {
+    width: 12px;
+    height: 3px;
+}
 
-::-webkit-scrollbar { width: 12px; height: 3px;}
-::-webkit-scrollbar-track { background-color: #999;}
-::-webkit-scrollbar-track-piece { background-color: #ffffff;}
-::-webkit-scrollbar-thumb { height: 52px; background-color:#CBCBCB; border-radius: 5px;}
-::-webkit-scrollbar-corner { background-color: #999;}
+::-webkit-scrollbar-track {
+    background-color: #999;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 52px;
+    background-color: #CBCBCB;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #999;
+}
 
 .itemBlockContainer {
     display: flex;
     height: 100vh;
+}
+
+@media screen and (max-width: 1300px) {
+    .itemBlockContainer {
+        flex-direction: column;
+    }
 }
 
 .columnBlock {
@@ -23,9 +45,60 @@
     overflow: auto;
 }
 
-.itemBlock::-webkit-scrollbar-button { 
-    background-color: #EBECF0; 
-    height: 40px;  
+@media screen and (max-width: 1204px) {
+    .firstBlock {
+        position: relative;
+        left: -117px;
+        top: 43px;
+    }
+    .itemBlock {
+        margin-left: 376px;
+    }
+    .dropDown {
+        position: relative;
+        left: 376px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .itemBlock {
+        margin-left: 241px;
+    }
+
+    .dropDown {
+        left: 241px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .itemBlock {
+        margin-left: 73px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .itemBlock {
+        margin-left: 50px;
+    }
+
+    .dropDown {
+        left: 50px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .itemBlock {
+        margin-left: 15px;
+    }
+
+    .dropDown {
+        left: 15px;
+    }
+}
+
+.itemBlock::-webkit-scrollbar-button {
+    background-color: #EBECF0;
+    height: 40px;
     border-radius: 5px;
 }
 
@@ -82,9 +155,9 @@
     overflow: auto;
 }
 
-.dropDown::-webkit-scrollbar-button { 
+.dropDown::-webkit-scrollbar-button {
     background-color: white;
-    height: 10px;  
+    height: 10px;
     border-radius: 5px;
 }
 
@@ -94,6 +167,12 @@
     height: 55px;
     color: white;
     margin-top: -58px;
+}
+
+@media screen and (max-width: 1300px) {
+    .border {
+        display: none;
+    }
 }
 
 .borderContent {
@@ -126,8 +205,4 @@
 .selectBtn {
     margin-left: 227px;
     cursor: pointer;
-}
-
-.ExternalClickInit {
-    
 }
