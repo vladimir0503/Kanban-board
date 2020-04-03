@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
 import './ItemColumn.css';
 import './Style.css';
-import ExternalClickInit from './ExternalClickInit';
 
 class Backlog extends React.Component {
 
@@ -26,8 +25,24 @@ class Backlog extends React.Component {
             linkCheck: false,
             taskDescrPos: '-132px',
             clickInit: false,
-            inputNone: null
+            inputNone: null,
+            wrapper: null
         }
+
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.hideDropdown = this.hideDropdown.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
     }
 
     selectTask(event) {
@@ -54,7 +69,8 @@ class Backlog extends React.Component {
             input: input,
             listInit: false,
             clickInit: false,
-            inputNone: null
+            inputNone: null,
+            wrapper: this.setWrapperRef = this.setWrapperRef.bind(this)
         });
     }
 
@@ -76,7 +92,8 @@ class Backlog extends React.Component {
             tasks: [...this.state.tasks, this.state.inputValue],
             button: <Button onClick={this.createInput.bind(this)} />,
             activeTasks: this.state.tasks.length + 1,
-            clickInit: false
+            clickInit: false,
+            wrapper: null
         })
 
     }
@@ -98,20 +115,27 @@ class Backlog extends React.Component {
         })
     }
 
-    hideDropdown = () => {
+
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            console.log('EXTERNAL CLICK INIT!')
+            this.hideDropdown();
+            this.setState({
+                wrapper: null
+            })
+        }
+    }
+
+    hideDropdown() {
         if (this.state.input === null) {
             return
         }
-        
+
         document.getElementById('input').value = '';
         this.setState({
             inputValue: null,
             inputNone: 'none'
         })
-    }
-
-    linkTest(even) {
-
     }
 
     render() {
@@ -129,16 +153,16 @@ class Backlog extends React.Component {
             <Router>
                 <Route path='/backlog' component={Page} />
                 <div className='itemBlockContainer'>
-                    <ExternalClickInit hideDropdown={this.hideDropdown}>
-                        <div className='columnBlock firstColumn'>
-                            <div className='itemBlock'>
-                                <p className='titleStyle'><Link className='linkStyle' to='/backlog'>{this.props.title}</Link></p>
-                                <div className='inputBlock'>
-                                    <ul className='listItemStyle'>
-                                        {taskList}
-                                    </ul>
+                    <div className='columnBlock firstColumn'>
+                        <div className='itemBlock'>
+                            <p className='titleStyle'><Link className='linkStyle' to='/backlog' >{this.props.title}</Link></p>
+                            <div className='inputBlock'>
+                                <ul className='listItemStyle'>
+                                    {taskList}
+                                </ul>
+                                <div ref={this.state.wrapper}>
                                     <div className='inputBlock'>
-                                        <div style={{margin: '0 auto', display: this.state.inputNone}}>
+                                        <div style={{ margin: '0 auto', display: this.state.inputNone }}>
                                             {this.state.input}
                                         </div>
                                         <div>
@@ -150,7 +174,7 @@ class Backlog extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </ExternalClickInit>
+                    </div>
                     <div>
                         <Ready title='Ready'
                             buttonInit={this.state.buttonInit}
@@ -160,7 +184,8 @@ class Backlog extends React.Component {
                             deleteTask={this.deleteTask}
                             clearActiveTasks={this.clearActiveTasks}
                             getFinishedTasks={this.getFinishedTasks}
-                            quantityTasks={this.state.activeTasks} />
+                            quantityTasks={this.state.activeTasks}
+                            offExternalClick={this.offExternalClick} />
                     </div>
                 </div>
                 <div className='border'>

@@ -8,7 +8,8 @@ class ItemsPage extends React.Component {
         this.state = {
             taskInfo: null,
             taskColumnPos: null,
-            displayStyle: null
+            displayStyle: null,
+            showContentBtn: null
         }
     }
 
@@ -50,22 +51,36 @@ class ItemsPage extends React.Component {
         })
     }
 
-    render() { 
+    showPage() {
+        this.setState({
+            displayStyle: null
+        })
+    }
+
+    hidePage() {
+        window.history.back();
+    }
+
+    render() {
         return (
-            <div className='contentContayner' style={{marginLeft: this.props.pagePosition, paddingTop: this.props.pagePadding }}>
-                {this.state.taskInfo}
-                <div className='titleBlock'>
-                    <h2 className='title'>{this.props.title}</h2>
-                    <div>
-                        <img className='removeInfoBtn' src={button} alt='button'></img>
+            <>
+                {this.state.showContentBtn}
+                <div onClick={console.log('content test')} className='contentContayner' style={{ display: this.state.displayStyle, marginLeft: this.props.pagePosition, paddingTop: this.props.pagePadding }}>
+                    {this.state.taskInfo}
+                    <div className='titleBlock'>
+                        <h2 className='title'>{this.props.title}</h2>
+                        <div className='btnContayner'>
+                            <img onClick={this.hidePage.bind(this)} className='removeInfoBtn' src={button} alt='button'></img>
+                        </div>
                     </div>
+                    <ul className='taskColumn' style={{ marginTop: this.state.taskColumnPos }}>
+                        {this.props.taskColumn.map((item, index) => {
+                            return <li className='task' onClick={this.showInfo.bind(this)} key={index}>{item}</li>
+                        })}
+                    </ul>
                 </div>
-                <ul className='taskColumn' style={{ marginTop: this.state.taskColumnPos }}>
-                    {this.props.taskColumn.map((item, index) => {
-                        return <li className='task' onClick={this.showInfo.bind(this)} key={index}>{item}</li>
-                    })}
-                </ul>
-            </div>
+            </>
+
         )
     }
 }

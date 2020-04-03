@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../button/Button';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
-import ExternalClickInit from './ExternalClickInit';
 import selectBtn from '../images/selectBtn.png'
 
 class Finished extends React.Component {
@@ -20,8 +19,24 @@ class Finished extends React.Component {
             pagePosition: {
                 margin: '-987px',
                 padding: '1px'
-            }
+            },
+            wrapper: null
         }
+
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.hideDropdown = this.hideDropdown.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
     }
 
     createSelect() {
@@ -42,7 +57,8 @@ class Finished extends React.Component {
         this.setState({
             disableButton: 'none',
             selectBox: selectBox,
-            button: <Button onClick={this.createSelect.bind(this)} />
+            button: <Button onClick={this.createSelect.bind(this)} />,
+            wrapper: this.setWrapperRef = this.setWrapperRef.bind(this)
         });
     }
 
@@ -70,6 +86,16 @@ class Finished extends React.Component {
         this.props.getFinishedTasks(this.state.finishedTasks + 1);
     }
 
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            console.log('EXTERNAL CLICK INIT!')
+            this.hideDropdown();
+            this.setState({
+                wrapper: null
+            })
+        }
+    }
+
     hideDropdown = () => {
         this.setState({
             transTasks: [],
@@ -95,37 +121,35 @@ class Finished extends React.Component {
             pagePadding={this.state.pagePosition.padding} />
 
         return (
-            <ExternalClickInit hideDropdown={this.hideDropdown}>
-                <Router>
-                    <Route path='/finished' component={Finished} />
-                    <ExternalClickInit hideDropdown={this.hideDropdown}>
-                        <div className='columnBlock'>
-                            <div className='itemBlock'>
-                                <p className='titleStyle'><Link className='linkStyle' to='/finished'>{this.props.title}</Link></p>
+            <Router>
+                <Route path='/finished' component={Finished} />
+                <div className='columnBlock'>
+                    <div ref={this.state.wrapper}>
+                        <div className='itemBlock'>
+                            <p className='titleStyle'><Link className='linkStyle' to='/finished'>{this.props.title}</Link></p>
+                            <div className='inputBlock'>
                                 <div className='inputBlock'>
-                                    <div className='inputBlock'>
-                                        {taskColumn}
-                                        <div>
-                                            {this.state.selectBox}
-                                        </div>
-                                        <div>
-                                            {this.state.button}
-                                            <div onClick={this.createSelect.bind(this)}
-                                                className='disableButton'
-                                                style={{ display: this.state.disableButton }}></div>
-                                        </div>
+                                    {taskColumn}
+                                    <div>
+                                        {this.state.selectBox}
+                                    </div>
+                                    <div>
+                                        {this.state.button}
+                                        <div onClick={this.createSelect.bind(this)}
+                                            className='disableButton'
+                                            style={{ display: this.state.disableButton }}></div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <ul className='listItemStyle'>
-                                    {dropDown}
-                                </ul>
-                            </div>
                         </div>
-                    </ExternalClickInit>
-                </Router>
-            </ExternalClickInit>
+                        <div>
+                            <ul className='listItemStyle'>
+                                {dropDown}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </Router>
         )
     }
 

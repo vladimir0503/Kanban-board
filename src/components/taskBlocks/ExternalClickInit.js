@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './Style.css'
 
 export default class ExternalClickInit extends Component {
     constructor(props) {
         super(props);
 
-        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.state = {
+            wrapper: this.setWrapperRef = this.setWrapperRef.bind(this)
+        }
+
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
@@ -23,13 +27,13 @@ export default class ExternalClickInit extends Component {
 
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            console.log('test')
+            console.log(this.props.test)
             this.props.hideDropdown();
         }
     }
 
     render() {
-        return <div ref={this.setWrapperRef}>{this.props.children}</div>;
+        return <div className='ExternalClickInit' ref={this.state.wrapper}>{this.props.children}</div>;
     }
 }
 

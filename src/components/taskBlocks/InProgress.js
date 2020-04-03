@@ -3,7 +3,6 @@ import Button from '../button/Button';
 import Finished from './Finished';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
-import ExternalClickInit from './ExternalClickInit';
 import selectBtn from '../images/selectBtn.png'
 
 class InProgress extends React.Component {
@@ -20,8 +19,24 @@ class InProgress extends React.Component {
             pagePosition: {
                 margin: '-686px',
                 padding: '1px',
-            }
+            },
+            wrapper: null
         }
+
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.hideDropdown = this.hideDropdown.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
     }
 
     createSelect() {
@@ -42,7 +57,8 @@ class InProgress extends React.Component {
         this.setState({
             disableButton: 'none',
             selectBox: selectBox,
-            button: <Button onClick={this.createSelect.bind(this)} />
+            button: <Button onClick={this.createSelect.bind(this)} />,
+            wrapper: this.setWrapperRef = this.setWrapperRef.bind(this)
         });
     }
 
@@ -75,6 +91,16 @@ class InProgress extends React.Component {
         })
     }
 
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            console.log('EXTERNAL CLICK INIT!')
+            this.hideDropdown();
+            this.setState({
+                wrapper: null
+            })
+        }
+    }
+
     hideDropdown = () => {
         this.setState({
             transTasks: [],
@@ -103,8 +129,8 @@ class InProgress extends React.Component {
             <Router>
                 <Route path='/inProgress' component={InProgress} />
                 <div className='itemBlockContainer'>
-                    <ExternalClickInit hideDropdown={this.hideDropdown}>
-                        <div className='columnBlock followColumn'>
+                    <div className='columnBlock followColumn'>
+                        <div ref={this.state.wrapper}>
                             <div className='itemBlock'>
                                 <p className='titleStyle'><Link className='linkStyle' to='/inProgress'>{this.props.title}</Link></p>
                                 <div className='inputBlock'>
@@ -120,14 +146,13 @@ class InProgress extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
                             <div>
                                 <ul className='listItemStyle'>
                                     <div className='dropDown'>{dropDown}</div>
                                 </ul>
                             </div>
                         </div>
-                    </ExternalClickInit>
+                    </div>
                     <div>
                         <Finished title='Finished'
                             taskColumn={taskColumn}
