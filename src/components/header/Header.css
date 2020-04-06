@@ -7,12 +7,6 @@
     margin-bottom: 30px;
 }
 
-@media screen and (max-width: 1300px) {
-    .headerStyle {
-        display: none;
-    }
-}
-
 .headerTitle {
     font-style: normal;
     font-weight: normal;
@@ -88,4 +82,19 @@
 
 .menuItem:hover {
     color: #5E6C84;
+}
+
+@media screen and (max-width: 1300px) {
+    .headerStyle {
+        background-color: #0079BF;
+    }
+
+    .headerContent {
+        width: 283px;
+    }
+
+    .headerTitle {
+        display: none;
+    }
+
 }

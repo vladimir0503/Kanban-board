@@ -169,17 +169,25 @@
     margin-top: -58px;
 }
 
-@media screen and (max-width: 1300px) {
-    .border {
-        display: none;
-    }
-}
-
 .borderContent {
     display: flex;
     width: 1200px;
     justify-content: space-between;
     margin: 0 auto;
+}
+
+@media screen and (max-width: 1300px) {
+    .border {
+        background-color: #0079BF;
+    }
+    
+    .borderContent {
+        width: 264px;
+    }
+
+    .kopyright {
+        display: none;
+    }
 }
 
 .tasksCounter {
@@ -205,4 +213,23 @@
 .selectBtn {
     margin-left: 227px;
     cursor: pointer;
+}
+
+.submitBtn {
+    background: #EBECF0;
+    border: 0;
+    border-radius: 10px;
+    width: 77px;
+    margin-left: 122px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btnText {
+    transition: 0.5s;
+    color: #5E6C84;
+}
+
+.btnText:hover {
+    color: black;
 }

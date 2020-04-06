@@ -39,9 +39,6 @@ class ItemsPage extends React.Component {
             taskInfo: taskInfo,
             taskColumnPos: '-303px',
         })
-
-        console.log('test show info');
-
     }
 
     removeInfo() {

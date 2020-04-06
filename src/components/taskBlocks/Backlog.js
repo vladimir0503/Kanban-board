@@ -26,7 +26,8 @@ class Backlog extends React.Component {
             taskDescrPos: '-132px',
             clickInit: false,
             inputNone: null,
-            wrapper: null
+            wrapper: null,
+            submitBtn: null
         }
 
         this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -58,18 +59,24 @@ class Backlog extends React.Component {
     createInput() {
 
         const input = <input
+            autoComplete="off"
             autoFocus={true}
             id='input'
             className='taskStyle'
             onChange={this.addValue.bind(this)}
-            onClick={this.addTask.bind(this)}>
+            onKeyPress={this.addTaskToEnter.bind(this)}>
         </input>;
+
+        const submitBtn = <button onClick={this.addTask.bind(this)}
+            className='submitBtn'><span className='btnText'>Submit</span></button>
+
         this.setState({
             buttonInit: true,
             input: input,
             listInit: false,
             clickInit: false,
             inputNone: null,
+            submitBtn: submitBtn,
             wrapper: this.setWrapperRef = this.setWrapperRef.bind(this)
         });
     }
@@ -81,6 +88,7 @@ class Backlog extends React.Component {
     }
 
     addTask() {
+
         if (this.state.inputValue === null) {
             return
         }
@@ -93,9 +101,16 @@ class Backlog extends React.Component {
             button: <Button onClick={this.createInput.bind(this)} />,
             activeTasks: this.state.tasks.length + 1,
             clickInit: false,
-            wrapper: null
+            wrapper: null,
+            submitBtn: null
         })
 
+    }
+
+    addTaskToEnter(event) {
+        if (event.key === 'Enter') {
+            this.addTask();
+        }
     }
 
     deleteTask = (value) => {
@@ -118,10 +133,10 @@ class Backlog extends React.Component {
 
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            console.log('EXTERNAL CLICK INIT!')
             this.hideDropdown();
             this.setState({
-                wrapper: null
+                wrapper: null,
+                submitBtn: null
             })
         }
     }
@@ -167,6 +182,7 @@ class Backlog extends React.Component {
                                         </div>
                                         <div>
                                             {this.state.button}
+                                            {this.state.submitBtn}
                                             <div className='disableButton'
                                                 style={{ display: 'none' }}></div>
                                         </div>
@@ -194,7 +210,7 @@ class Backlog extends React.Component {
                             <p>Active tasks: {this.state.activeTasks}</p>
                             <p>Finished tasks: {this.state.finishedTasks}</p>
                         </div>
-                        <p>Kanban board by Vladimir, 2020.</p>
+                        <p className='kopyright'>Kanban board by Vladimir, 2020.</p>
                     </div>
                 </div>
             </Router>
