@@ -183,10 +183,12 @@
     
     .borderContent {
         width: 264px;
+        flex-direction: column;
+        margin-top: -47px;
     }
 
     .kopyright {
-        display: none;
+        margin-top: 0;
     }
 }
 
