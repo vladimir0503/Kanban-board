@@ -24,11 +24,13 @@
 .itemBlockContainer {
     display: flex;
     height: 100vh;
+    flex: 1 0 auto;
 }
 
 @media screen and (max-width: 1300px) {
     .itemBlockContainer {
         flex-direction: column;
+        height: auto;
     }
 }
 
@@ -161,7 +163,7 @@
     border-radius: 5px;
 }
 
-.border {
+.footer {
     display: flex;
     background: #0067A3;
     height: 55px;
@@ -169,7 +171,7 @@
     margin-top: -58px;
 }
 
-.borderContent {
+.footerContent {
     display: flex;
     width: 1200px;
     justify-content: space-between;
@@ -177,18 +179,16 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .border {
-        background-color: #0079BF;
-    }
-    
-    .borderContent {
-        width: 264px;
-        flex-direction: column;
-        margin-top: -47px;
+    .footer {
+        background: #0079BF;
+        margin-top: 146px;
     }
 
-    .kopyright {
-        margin-top: 0;
+    .footerContent {
+        flex-direction: column;
+        width: 1200px;
+        margin: 0 auto;
+        width: 244px;
     }
 }
 

@@ -203,9 +203,10 @@ class Backlog extends React.Component {
                             quantityTasks={this.state.activeTasks}
                             offExternalClick={this.offExternalClick} />
                     </div>
+                    <div clasName='push'></div>
                 </div>
-                <div className='border'>
-                    <div className='borderContent'>
+                <div className='footer'>
+                    <div className='footerContent'>
                         <div className='tasksCounter'>
                             <p>Active tasks: {this.state.activeTasks}</p>
                             <p>Finished tasks: {this.state.finishedTasks}</p>
