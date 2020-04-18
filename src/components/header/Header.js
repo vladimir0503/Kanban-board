@@ -1,7 +1,11 @@
 import React from 'react';
 import userMenuUp from '../images/userMenuUp.jpg';
 import userMenuDown from '../images/userMenuDown.jpg';
-import './Header.css'
+import './Header.css';
+import styled, { keyframes } from 'styled-components';
+import { fadeInDown } from 'react-animations';
+
+const AnimMenu = styled.div`animation: 0.5s ${keyframes`${fadeInDown}`} 1`;
 
 class Header extends React.Component {
 
@@ -16,14 +20,14 @@ class Header extends React.Component {
 
     userMenu() {
 
-        const dropDownMenu = <div className='dropDownContayner'>
+        const dropDownMenu = <AnimMenu><div className='dropDownContayner'>
             <div className='dropDownArrow'></div>
             <ul className='dropDownMenu'>
                 <li><p className='menuItem'>My account</p></li>
                 <li><p className='menuItem'>My tasks</p></li>
                 <li><p className='menuItem'>Log out</p></li>
             </ul>
-        </div>
+        </div></AnimMenu>
 
         if (this.state.click === false) {
             this.setState({

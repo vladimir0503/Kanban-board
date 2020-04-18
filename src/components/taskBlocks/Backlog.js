@@ -5,6 +5,10 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
 import './ItemColumn.css';
 import './Style.css';
+import styled, { keyframes } from 'styled-components';
+import { fadeInDown } from 'react-animations';
+
+const AnimElem = styled.div`animation: 0.5s ${keyframes`${fadeInDown}`} 1`;
 
 class Backlog extends React.Component {
 
@@ -58,17 +62,17 @@ class Backlog extends React.Component {
 
     createInput() {
 
-        const input = <input
+        const input = <AnimElem><input
             autoComplete="off"
             autoFocus={true}
             id='input'
             className='taskStyle'
             onChange={this.addValue.bind(this)}
             onKeyPress={this.addTaskToEnter.bind(this)}>
-        </input>;
+        </input></AnimElem>;
 
         const submitBtn = <button onClick={this.addTask.bind(this)}
-            className='submitBtn'><span className='btnText'>Submit</span></button>
+            className='submitBtn'><AnimElem><span className='btnText'>Submit</span></AnimElem></button>
 
         this.setState({
             buttonInit: true,

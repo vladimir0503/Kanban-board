@@ -77,7 +77,6 @@ class ItemsPage extends React.Component {
                     </ul>
                 </div>
             </>
-
         )
     }
 }

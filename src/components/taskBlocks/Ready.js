@@ -3,7 +3,11 @@ import Button from '../button/Button';
 import InProgress from './InProgress';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ItemsPage from './tasksRouter/ItemsPage';
-import selectBtn from '../images/selectBtn.png'
+import selectBtn from '../images/selectBtn.png';
+import styled, { keyframes } from 'styled-components';
+import { fadeInDown } from 'react-animations';
+
+const AnimElem = styled.div`animation: 0.5s ${keyframes`${fadeInDown}`} 1`;
 
 class Ready extends React.Component {
     constructor(props) {
@@ -47,12 +51,12 @@ class Ready extends React.Component {
             return
         }
 
-        const selectBox = <div
+        const selectBox = <AnimElem><div
             className='taskStyle'
             style={{ cursor: 'pointer' }}
             onClick={this.addTask.bind(this)}>
             <img className='selectBtn' src={selectBtn} alt='selectBtn'></img>
-        </div>;
+        </div></AnimElem>;
 
         this.setState({
             disableButton: 'none',
@@ -113,7 +117,7 @@ class Ready extends React.Component {
     render() {
 
         const dropDown = this.state.transTasks.map((item, index) => {
-            return <div onClick={this.selectTask.bind(this)} key={index} index={index} >{item}</div>;
+            return <AnimElem><div onClick={this.selectTask.bind(this)} key={index} index={index} >{item}</div></AnimElem>;
         })
 
         const taskColumn = this.state.taskColumn.map((item, index) => {
