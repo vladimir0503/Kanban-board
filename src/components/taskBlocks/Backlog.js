@@ -6,9 +6,10 @@ import ItemsPage from './tasksRouter/ItemsPage';
 import './ItemColumn.css';
 import './Style.css';
 import styled, { keyframes } from 'styled-components';
-import { fadeInDown } from 'react-animations';
+import { fadeInDown, shake } from 'react-animations';
 
 const AnimElem = styled.div`animation: 0.5s ${keyframes`${fadeInDown}`} 1`;
+const ErrAnim = styled.div`animation: 0.5s ${keyframes`${shake}`} 1`;
 
 class Backlog extends React.Component {
 
@@ -93,7 +94,20 @@ class Backlog extends React.Component {
 
     addTask() {
 
+        const ErrInput = <ErrAnim><input
+            style={{ boxShadow: '0px 0px 4px 3px red' }}
+            autoComplete="off"
+            autoFocus={true}
+            id='input'
+            className='taskStyle'
+            onChange={this.addValue.bind(this)}
+            onKeyPress={this.addTaskToEnter.bind(this)}>
+            </input></ErrAnim>;
+
         if (this.state.inputValue === null) {
+            this.setState({
+                input: ErrInput
+            })
             return
         }
 
